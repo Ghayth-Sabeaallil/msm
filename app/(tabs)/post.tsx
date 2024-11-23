@@ -4,7 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
-export default function HomeScreen() {
+export default function TabTwoScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -17,12 +17,11 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Home</ThemedText>
+        <ThemedText type="title">Add</ThemedText>
       </ThemedView>
     </ParallaxScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   headerImage: {
@@ -36,4 +35,3 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 });
-
