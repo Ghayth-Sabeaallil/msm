@@ -13,6 +13,8 @@ const MAPPING = {
   'paperplane.fill': 'post-add',
   'switch.2': 'switch-account',
   'comb.fill': 'add-comment',
+  'person.2': 'person-add-alt',
+
 
 } as Partial<
   Record<

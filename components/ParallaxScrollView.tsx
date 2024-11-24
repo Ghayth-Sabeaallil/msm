@@ -5,7 +5,8 @@ import { ThemedView } from '@/components/ThemedView';
 
 
 type Props = PropsWithChildren<{
-  children: React.ReactNode
+  children: React.ReactNode,
+  headerBackgroundColor: { dark: string; light: string };
 }>;
 
 export default function ParallaxScrollView({
