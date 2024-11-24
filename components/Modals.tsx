@@ -2,7 +2,6 @@ import { useState } from 'react';
 import React from 'react';
 import { Text, StyleSheet, Pressable, Modal, Alert, TextInput, View, ScrollView, Image } from 'react-native';
 import { IconSymbol } from './ui/IconSymbol';
-import { ThemedText } from './ThemedText';
 
 interface Item {
     id: number

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
-import { IconSymbol } from './ui/IconSymbol';
+import { StyleSheet } from 'react-native';
 
 
 export type CardsProps = {
