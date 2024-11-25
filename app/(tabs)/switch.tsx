@@ -1,8 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Modals } from '@/components/Modals'
+import { Cards } from '@/components/Cards';
+import data from '../../lib/db.json';
 
 export default function SwitchScreen() {
     return (
@@ -11,6 +13,9 @@ export default function SwitchScreen() {
                 <ThemedText type="title">Accounts</ThemedText>
             </ThemedView>
             <Modals />
+            <ScrollView style={styles.scroll}>
+                {data.users.map((user) => <Cards key={user.id} email={user.email} img={user.img} name={user.username} />)}
+            </ScrollView>
         </ParallaxScrollView>
     );
 }
@@ -21,6 +26,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         textAlign: "center",
-        gap: 8,
+    },
+    scroll: {
+        gap: 15,
     },
 });

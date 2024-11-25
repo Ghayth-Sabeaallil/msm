@@ -24,12 +24,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     paddingBottom: 20,
-    paddingRight: 10,
-    paddingLeft: 10,
+
   },
   content: {
     flex: 1,
-    padding: 32,
+    padding: 15,
     gap: 16,
     overflow: 'hidden',
   },

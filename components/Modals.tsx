@@ -4,33 +4,44 @@ import { Text, StyleSheet, Pressable, Modal, Alert, TextInput, View, ScrollView,
 import { IconSymbol } from './ui/IconSymbol';
 
 interface Item {
-    id: number
     username: string;
     email: string;
+    img: string
 }
 
 export function Modals() {
     const [modalVisible, setModalVisible] = useState(false);
     const [username, setUsername] = useState<string>("");
     const [random, setRandom] = useState<number>(1);
-
     const [email, setEmail] = useState<string>("");
-    const [items, setItems] = useState<Item[]>([]);
 
-    const eventRemoveFunction = (id: number) => {
-        setItems((itemList) => itemList.filter((item) => item.id !== id));
-    };
     const handleNameChange = (input: string) => {
         setUsername(input);
     }
-    const handleAgeChange = (input: string) => {
+    const handleEmailChange = (input: string) => {
         setEmail(input);
     }
     const eventHandlerFunction = () => {
-        const newItem = { id: items.length + 1, username: username, email: email };
-        setItems([...items, newItem]);
-        setUsername("");
-        setEmail("");
+        if (username.length != 0 && email.length != 0) {
+            fetch('http://192.168.0.127:3000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    img: `https://avatar.iran.liara.run/public/${random}`,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data))
+                .catch(error => console.error('Error:', error));
+            setUsername("");
+            setEmail("");
+            getRandomNumber();
+            setModalVisible(!modalVisible);
+        }
     }
     const getRandomNumber = () => {
         setRandom(Math.floor(Math.random() * 100) + 1);
@@ -40,9 +51,7 @@ export function Modals() {
             <Pressable style={styles.circle} onPress={() => setModalVisible(true)}>
                 <IconSymbol size={28} name="person.2" color={"black"} />
             </Pressable>
-
             <Modal
-                style={styles.modal}
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
@@ -63,7 +72,7 @@ export function Modals() {
                         <TextInput
                             style={styles.input}
                             value={email}
-                            onChangeText={handleNameChange} // handle text changes
+                            onChangeText={handleEmailChange} // handle text changes
                             placeholder="Email"
                             placeholderTextColor="#000"
                         />
@@ -85,8 +94,6 @@ export function Modals() {
                                 style={[styles.button]}
                                 onPress={() => {
                                     eventHandlerFunction();
-                                    setModalVisible(!modalVisible);
-
                                 }}>
                                 <Text style={styles.btnTxt}>Create</Text>
                             </Pressable>
@@ -97,15 +104,11 @@ export function Modals() {
                                 }}>
                                 <Text style={styles.btnTxt}>Exit</Text>
                             </Pressable>
-
                         </View>
-
                     </View>
                 </ScrollView>
             </Modal>
         </>
-
-
     );
 }
 
@@ -120,27 +123,24 @@ const styles = StyleSheet.create({
         height: 125,
     },
     circle: {
-        width: 70,
-        height: 70,
+        width: 60,
+        height: 60,
         backgroundColor: "lightgrey",
         color: "white",
         borderRadius: "50%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "fixed",
+        position: "absolute",
         zIndex: 10,
-        top: "85%",
-        left: "80%",
+        top: "95%",
+        left: "85%",
     },
     circleTxt: {
         color: "balck",
         fontWeight: "bold",
         textAlign: "center",
         fontSize: 32,
-    },
-    modal: {
-        flex: 15,
     },
     modalView: {
         backgroundColor: '#efe9e9',

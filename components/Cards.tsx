@@ -1,44 +1,66 @@
-import { useState } from 'react';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 
 
 export type CardsProps = {
-    img?: string;
-    name?: string;
+    img: string;
+    name: string;
+    email: string,
 };
 
 export function Cards({
     img,
     name,
+    email
 }: CardsProps) {
-    const [modalVisible, setModalVisible] = useState(false);
 
 
     return (
-        <></>
+        <>
+            <View style={styles.container}>
+                <Image
+                    style={styles.img}
+                    source={{
+                        uri: img,
+                    }}
+                />
+                <View style={styles.info}>
+                    <Text style={styles.name}>{name}</Text>
+                    <Text style={styles.email}>{email}</Text>
+                </View>
+            </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
-    circle: {
+    container: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 10,
+        borderRadius: 15,
+        backgroundColor: "#aaacad",
+        padding: 5,
+        margin: 5,
+    },
+    info: {
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center",
+    },
+    img: {
         width: 70,
         height: 70,
-        backgroundColor: "pink",
-        color: "white",
-        borderRadius: "50%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "fixed",
-        zIndex: 10,
-        top: "85%",
-        left: 280,
+        borderColor: "black",
     },
-    circleTxt: {
-        color: "balck",
-        fontWeight: "bold",
-        textAlign: "center",
-        fontSize: 32,
+    name: {
+        fontSize: 16,
+        fontWeight: "700",
+
+    },
+    email: {
+        fontSize: 15,
+        color: "#454747",
+        fontWeight: "500",
     },
 });
