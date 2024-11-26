@@ -31,9 +31,6 @@ export function Modals() {
                         img: `https://avatar.iran.liara.run/public/${random}`,
                     }),
                 })
-                    .then(response => response.json())
-                    .then(data => console.log('Success:', data))
-                    .catch(error => console.error('Error:', error));
                 setUsername("");
                 setEmail("");
                 getRandomNumber();

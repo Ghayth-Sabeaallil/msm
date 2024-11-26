@@ -73,8 +73,6 @@ export function Cards({
                     img: `https://avatar.iran.liara.run/public/${random}`,
                 }),
             })
-                .then(response => response.json())
-                .then(data => console.log(data));
         }
 
         setModalVisible(!modalVisible);
