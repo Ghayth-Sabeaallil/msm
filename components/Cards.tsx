@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
-import { EditModal } from './EditModal';
 
 
 export type CardsProps = {

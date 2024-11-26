@@ -1,3 +1,10 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "1ce0",
+      "username": "Ghayth",
+      "email": "Sabeaallil",
+      "img": "https://avatar.iran.liara.run/public/1"
+    }
+  ]
 }
