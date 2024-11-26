@@ -14,7 +14,7 @@ export default function SwitchScreen() {
             </ThemedView>
             <Modals />
             <ScrollView style={styles.scroll}>
-                {data.users.map((user) => <Cards key={user.id} email={user.email} img={user.img} name={user.username} />)}
+                {data.users.map((user) => (user && <Cards key={user.id} emails={user.email} img={user.img} name={user.username} />))}
             </ScrollView>
         </ParallaxScrollView>
     );

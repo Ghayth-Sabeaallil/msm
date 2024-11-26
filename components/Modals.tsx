@@ -3,12 +3,6 @@ import React from 'react';
 import { Text, StyleSheet, Pressable, Modal, Alert, TextInput, View, ScrollView, Image } from 'react-native';
 import { IconSymbol } from './ui/IconSymbol';
 
-interface Item {
-    username: string;
-    email: string;
-    img: string
-}
-
 export function Modals() {
     const [modalVisible, setModalVisible] = useState(false);
     const [username, setUsername] = useState<string>("");
@@ -21,26 +15,40 @@ export function Modals() {
     const handleEmailChange = (input: string) => {
         setEmail(input);
     }
-    const eventHandlerFunction = () => {
+    const eventHandlerFunction = async () => {
         if (username.length != 0 && email.length != 0) {
-            fetch('http://192.168.0.127:3000/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: username,
-                    email: email,
-                    img: `https://avatar.iran.liara.run/public/${random}`,
-                }),
-            })
-                .then(response => response.json())
-                .then(data => console.log('Success:', data))
-                .catch(error => console.error('Error:', error));
-            setUsername("");
-            setEmail("");
-            getRandomNumber();
-            setModalVisible(!modalVisible);
+            const response = await fetch(`http://192.168.0.127:3000/users?username=${username}`);
+            const users = await response.json();
+            if (users.length == 0) {
+                fetch('http://192.168.0.127:3000/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        img: `https://avatar.iran.liara.run/public/${random}`,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log('Success:', data))
+                    .catch(error => console.error('Error:', error));
+                setUsername("");
+                setEmail("");
+                getRandomNumber();
+                setModalVisible(!modalVisible);
+            }
+            else {
+                Alert.alert('Create error', 'This user is already exist', [
+                    { text: 'OK' },
+                ]);
+            }
+        }
+        else {
+            Alert.alert('Create error', 'Please fill all inputs', [
+                { text: 'OK' },
+            ]);
         }
     }
     const getRandomNumber = () => {
