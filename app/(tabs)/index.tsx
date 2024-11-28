@@ -6,14 +6,18 @@ import data from '../../lib/db.json';
 import { PostView } from '@/components/PostView';
 
 export default function HomeScreen() {
+  const getImg = (creator: string): string | undefined => {
+    const user = data.users.find(user => user.username === creator);
+    return user?.img;
+  }
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}>
       <ThemedView style={styles.Container}>
-        <ThemedText type="title">Home</ThemedText>
+        <ThemedText type="title">All Posts</ThemedText>
       </ThemedView>
       <ScrollView style={styles.scroll}>
-        {data.posts.map((post) => (post && <PostView id={post.id} title={post.title} des={post.description} date={post.date} time={post.time} creator={post.creator} />))}
+        {data.posts.map((post) => (post && <PostView key={post.id} id={post.id} title={post.title} des={post.description} date={post.date} time={post.time} creator={post.creator} img={getImg(post.creator)} />))}
       </ScrollView>
     </ParallaxScrollView>
   );
@@ -21,13 +25,8 @@ export default function HomeScreen() {
 
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
   scroll: {
+    display: "flex",
     gap: 15,
   }, Container: {
     flexDirection: 'column',

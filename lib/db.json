@@ -1,35 +1,37 @@
 {
   "users": [
     {
-      "id": "a06d",
-      "username": "Hh",
-      "email": "Dd",
-      "img": "https://avatar.iran.liara.run/public/1"
-    },
-    {
-      "id": "ce24",
-      "username": "Aa",
-      "email": "Sa",
-      "img": "https://avatar.iran.liara.run/public/1"
-    },
-    {
-      "id": "05d7",
+      "id": "2b2a",
       "username": "Ghayth",
-      "email": "Sa",
-      "img": "https://avatar.iran.liara.run/public/49"
+      "email": "ghaessesa58@gmail.com",
+      "img": "https://avatar.iran.liara.run/public/32"
+    },
+    {
+      "id": "4e9c",
+      "username": "Fatima",
+      "email": "fatima@outlook.com",
+      "img": "https://avatar.iran.liara.run/public/96"
     }
   ],
   "posts": [
     {
-      "id": "318d",
-      "title": "My first Post ",
-      "description": "des",
-      "creator": "Aa",
+      "id": "514c",
+      "title": "WW2",
+      "description": "The world war 2 was in 1945",
+      "creator": "Ghayth",
       "date": "2024-11-28",
-      "time": "12:48"
+      "time": "22:20"
+    },
+    {
+      "id": "64e6",
+      "title": "Sweden 1998",
+      "description": "Sweden Stockholm",
+      "creator": "Fatima",
+      "date": "2024-11-28",
+      "time": "22:20"
     }
   ],
   "session": {
-    "user": "Aa"
+    "user": "Fatima"
   }
 }

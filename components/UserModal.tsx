@@ -17,10 +17,10 @@ export function UserModal() {
     }
     const eventHandlerFunction = async () => {
         if (username.length != 0 && email.length != 0) {
-            const response = await fetch(`http://192.168.0.127:3000/users?username=${username}`);
+            const response = await fetch(`http://192.168.1.192:3000/users?username=${username}`);
             const users = await response.json();
             if (users.length == 0) {
-                fetch('http://192.168.0.127:3000/users', {
+                fetch('http://192.168.1.192:3000/users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput, GestureResponderEvent } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
+import data from '../lib/db.json';
 
 
 export type PostProps = {
@@ -9,7 +10,8 @@ export type PostProps = {
     des: string;
     date: string,
     time: string,
-    creator: string
+    creator: string,
+    img: string | undefined
 };
 
 export function PostView({
@@ -18,30 +20,14 @@ export function PostView({
     des,
     date,
     time,
-    creator
+    creator,
+    img
 }: PostProps) {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [username, setUsername] = useState<string>(title);
-    const [email, setEmail] = useState<string>(des);
-    const [imgage, setImage] = useState<string>(des);
+    const [titleState, setTitleState] = useState<string>(title);
+    const [desState, setDesState] = useState<string>(des);
 
 
-    useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const response = await fetch(`http://192.168.0.127:3000/users?username=${creator}`); // Replace with your API URL
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setImage(data.img);
-            } catch (err) {
-                console.error(err)
-            }
-        };
-
-        fetchImage();
-    }, [creator]);
 
     const renderLeftActions = () => (
         <View style={[styles.action, { backgroundColor: 'green' }]}>
@@ -61,10 +47,10 @@ export function PostView({
         setModalVisible(true);
     };
     const handleNameChange = (input: string) => {
-        setUsername(input);
+        setTitleState(input);
     }
     const handleEmailChange = (input: string) => {
-        setEmail(input);
+        setDesState(input);
     }
     const handleSwipeDelete = async () => {
 
@@ -88,13 +74,20 @@ export function PostView({
                         id={id}>
                         <View style={styles.info}>
                             <Image
-                                style={styles.img}
+                                style={styles.imgs}
                                 source={{
-                                    uri: imgage,
+                                    uri: img,
                                 }}
                             />
-                            <Text style={styles.title}>{title}</Text>
-                            <Text style={styles.des}>{des}</Text>
+                            <View>
+                                <Text style={styles.viewUser}>{creator}</Text>
+                                <Text style={styles.viewDate}>{date} - {time}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.infoView}>
+                            <Text style={styles.viewTitle}>{titleState}</Text>
+                            <Text style={styles.viewDes}>{desState}</Text>
+
                         </View>
                     </Pressable>
                 </Swipeable>
@@ -107,21 +100,47 @@ export function PostView({
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         borderRadius: 15,
-        padding: 25,
+        padding: 10,
+        gap: 5,
         margin: 5,
     },
     info: {
         display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 10
+    },
+    infoView: {
+        borderWidth: 2,
+        borderRadius: 15,
+        padding: 15,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 10
+    },
+    infoCol: {
+        display: "flex",
         flexDirection: "column",
         alignSelf: "center",
+        justifyContent: "center",
     },
-    title: {
-        fontSize: 17,
+    viewUser: {
+        fontSize: 20,
         fontWeight: "700",
     },
-    des: {
+    viewDate: {
+        fontSize: 12,
+        color: "#454747",
+        fontWeight: "500",
+    },
+    viewTitle: {
+        fontSize: 18,
+        fontWeight: "700",
+    },
+    viewDes: {
         fontSize: 16,
         color: "#454747",
         fontWeight: "500",
@@ -135,7 +154,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: "center",
         width: 80,
-        height: "88%",
+        height: "94%",
         borderRadius: 15,
 
     },
@@ -149,8 +168,8 @@ const styles = StyleSheet.create({
         gap: 5
     },
     imgs: {
-        width: 125,
-        height: 125,
+        width: 65,
+        height: 65,
     },
     circle: {
         width: 60,

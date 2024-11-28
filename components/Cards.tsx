@@ -49,10 +49,10 @@ export function Cards({
     }
     const handleSwipeDelete = async () => {
         try {
-            const response = await fetch(`http://192.168.0.127:3000/users?username=${name}`);
+            const response = await fetch(`http://192.168.1.192:3000/users?username=${name}`);
             const users = await response.json();
             for (const user of users) {
-                fetch(`http://192.168.0.127:3000/users/${user.id}`, { method: 'DELETE' });
+                fetch(`http://192.168.1.192:3000/users/${user.id}`, { method: 'DELETE' });
             }
         } catch (error) {
             console.error('Error deleting users:', error);
@@ -63,10 +63,10 @@ export function Cards({
     }
 
     const eventHandlerFunction = async () => {
-        const response = await fetch(`http://192.168.0.127:3000/users?username=${name}`);
+        const response = await fetch(`http://192.168.1.192:3000/users?username=${name}`);
         const users = await response.json();
         for (const user of users) {
-            fetch(`http://192.168.0.127:3000/users/${user.id}`, {
+            fetch(`http://192.168.1.192:3000/users/${user.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export function Cards({
     }
 
     const session = async () => {
-        fetch('http://192.168.0.127:3000/session', {
+        fetch('http://192.168.1.192:3000/session', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

@@ -23,7 +23,7 @@ export function PostModal() {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-        fetch('http://192.168.0.127:3000/posts', {
+        fetch('http://192.168.1.192:3000/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
         padding: 15,
         marginTop: "25%",
         gap: 10,
+        height: "100%",
         borderRadius: 10,
         alignItems: 'center',
         shadowColor: '#000',
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
         gap: 5,
     },
     des: {
-        height: "60%",
+        height: "30%",
         width: "70%",
         borderColor: 'black',
         borderWidth: 1,
@@ -167,13 +168,13 @@ const styles = StyleSheet.create({
         borderTopEndRadius: 5,
         borderTopStartRadius: 5,
         paddingLeft: 8,
-        marginBottom: 10,
         color: 'black',
         gap: 5,
-        padding: 10
+        textAlign: 'left', // Aligns text to the left
+        textAlignVertical: 'top',
     },
     button: {
-        width: "60%",
+        width: "50%",
         borderRadius: 20,
         padding: 10,
         elevation: 2,
