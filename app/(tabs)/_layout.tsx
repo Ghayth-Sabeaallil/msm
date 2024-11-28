@@ -28,7 +28,7 @@ export default function TabLayout() {
       }}>
 
       <Tabs.Screen
-        name="switch"
+        name="switchPage"
         options={{
           title: 'Switch',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="switch.2" color={color} />,
@@ -42,7 +42,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="post"
+        name="postPage"
         options={{
           title: 'Add',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,

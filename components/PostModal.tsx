@@ -2,60 +2,42 @@ import { useState } from 'react';
 import React from 'react';
 import { Text, StyleSheet, Pressable, Modal, Alert, TextInput, View, ScrollView, Image } from 'react-native';
 import { IconSymbol } from './ui/IconSymbol';
+import data from '../lib/db.json';
 
-export function UserModal() {
+export function PostModal() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [username, setUsername] = useState<string>("");
-    const [random, setRandom] = useState<number>(1);
-    const [email, setEmail] = useState<string>("");
+    const [title, setTitle] = useState<string>("");
+    const [des, setDes] = useState<string>("");
 
     const handleNameChange = (input: string) => {
-        setUsername(input);
+        setTitle(input);
     }
     const handleEmailChange = (input: string) => {
-        setEmail(input);
+        setDes(input);
     }
     const eventHandlerFunction = async () => {
-        if (username.length != 0 && email.length != 0) {
-            const response = await fetch(`http://192.168.0.127:3000/users?username=${username}`);
-            const users = await response.json();
-            if (users.length == 0) {
-                fetch('http://192.168.0.127:3000/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        email: email,
-                        img: `https://avatar.iran.liara.run/public/${random}`,
-                    }),
-                })
-                setUsername("");
-                setEmail("");
-                getRandomNumber();
-                setModalVisible(!modalVisible);
-            }
-            else {
-                Alert.alert('Create error', 'This user is already exist', [
-                    { text: 'OK' },
-                ]);
-            }
-        }
-        else {
-            Alert.alert('Create error', 'Please fill all inputs', [
-                { text: 'OK' },
-            ]);
-        }
+        fetch('http://localhost:3000/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: title,
+                description: des,
+                creator: data.session.user,
+            }),
+        })
+        setTitle("");
+        setDes("");
+        setModalVisible(!modalVisible);
     }
-    const getRandomNumber = () => {
-        setRandom(Math.floor(Math.random() * 100) + 1);
-    }
+
     return (
         <>
-            <Pressable style={styles.circle} onPress={() => setModalVisible(true)}>
-                <IconSymbol size={28} name="person.2" color={"black"} />
-            </Pressable>
+            {data.session.user.length != 0 && <Pressable style={styles.circle} onPress={() => setModalVisible(true)}>
+                <IconSymbol size={28} name="paperplane.fill" color={"black"} />
+            </Pressable>}
+
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -66,34 +48,24 @@ export function UserModal() {
                 }}>
                 <ScrollView>
                     <View style={styles.modalView}>
-                        <Text style={styles.btnTxt}>Create an account</Text>
+                        <Text style={styles.btnTxt}>Create a Post</Text>
                         <TextInput
                             style={styles.input}
-                            value={username}
+                            value={title}
                             onChangeText={handleNameChange} // handle text changes
-                            placeholder="Username"
+                            placeholder="Title"
                             placeholderTextColor="#000"
                         />
                         <TextInput
-                            style={styles.input}
-                            value={email}
+                            multiline={true}
+                            numberOfLines={4}
+                            style={styles.des}
+                            value={des}
                             onChangeText={handleEmailChange} // handle text changes
-                            placeholder="Email"
+                            placeholder="Description"
                             placeholderTextColor="#000"
                         />
-                        <Image
-                            style={styles.img}
-                            source={{
-                                uri: `https://avatar.iran.liara.run/public/${random}`,
-                            }}
-                        />
-                        <Pressable
-                            style={[styles.button]}
-                            onPress={() => {
-                                getRandomNumber();
-                            }}>
-                            <Text style={styles.btnTxt}>Random Image</Text>
-                        </Pressable>
+
                         <View style={styles.row}>
                             <Pressable
                                 style={[styles.button]}
@@ -122,10 +94,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         gap: 5
-    },
-    img: {
-        width: 125,
-        height: 125,
     },
     circle: {
         width: 60,
@@ -178,7 +146,22 @@ const styles = StyleSheet.create({
         paddingLeft: 8,
         marginBottom: 10,
         color: 'black',
-        gap: 5
+        gap: 5,
+    },
+    des: {
+        height: "60%",
+        width: "70%",
+        borderColor: 'black',
+        borderWidth: 1,
+        borderBottomEndRadius: 5,
+        borderBottomStartRadius: 5,
+        borderTopEndRadius: 5,
+        borderTopStartRadius: 5,
+        paddingLeft: 8,
+        marginBottom: 10,
+        color: 'black',
+        gap: 5,
+        padding: 10
     },
     button: {
         width: "60%",

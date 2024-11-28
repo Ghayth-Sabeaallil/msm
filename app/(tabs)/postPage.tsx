@@ -2,28 +2,25 @@ import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { PostModal } from '@/components/PostModal';
 
 export default function TabTwoScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Add</ThemedText>
+      <ThemedView style={styles.Container}>
+        <ThemedText type="title">My Posts</ThemedText>
       </ThemedView>
+      <PostModal />
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  Container: {
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignSelf: "center",
+    textAlign: "center",
   },
 });
