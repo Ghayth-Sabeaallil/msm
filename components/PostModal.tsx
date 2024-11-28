@@ -15,8 +15,15 @@ export function PostModal() {
     const handleEmailChange = (input: string) => {
         setDes(input);
     }
-    const eventHandlerFunction = async () => {
-        fetch('http://localhost:3000/posts', {
+    const eventHandlerFunction = () => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const dd = String(today.getDate()).padStart(2, '0');
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        fetch('http://192.168.0.127:3000/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,6 +32,8 @@ export function PostModal() {
                 title: title,
                 description: des,
                 creator: data.session.user,
+                date: `${yyyy}-${mm}-${dd}`,
+                time: `${hours}:${minutes}`,
             }),
         })
         setTitle("");

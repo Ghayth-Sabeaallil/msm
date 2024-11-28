@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         gap: 5
     },
     button: {
-        width: "60%",
+        width: "50%",
         borderRadius: 20,
         padding: 10,
         elevation: 2,

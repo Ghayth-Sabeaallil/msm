@@ -11,10 +11,23 @@
       "username": "Aa",
       "email": "Sa",
       "img": "https://avatar.iran.liara.run/public/1"
+    },
+    {
+      "id": "05d7",
+      "username": "Ghayth",
+      "email": "Sa",
+      "img": "https://avatar.iran.liara.run/public/49"
     }
   ],
   "posts": [
-  
+    {
+      "id": "318d",
+      "title": "My first Post ",
+      "description": "des",
+      "creator": "Aa",
+      "date": "2024-11-28",
+      "time": "12:48"
+    }
   ],
   "session": {
     "user": "Aa"

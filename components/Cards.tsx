@@ -83,7 +83,7 @@ export function Cards({
     }
 
     const session = async () => {
-        fetch('http://localhost:3000/session', {
+        fetch('http://192.168.0.127:3000/session', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
