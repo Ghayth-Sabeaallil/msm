@@ -2,9 +2,10 @@ import { ScrollView, StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Modals } from '@/components/Modals'
+import { Modals } from '@/components/UserModal'
 import { Cards } from '@/components/Cards';
 import data from '../../lib/db.json';
+
 
 export default function SwitchScreen() {
     return (
@@ -14,7 +15,7 @@ export default function SwitchScreen() {
             </ThemedView>
             <Modals />
             <ScrollView style={styles.scroll}>
-                {data.users.map((user) => (user && <Cards key={user.id} emails={user.email} img={user.img} name={user.username} />))}
+                {data.users.map((user) => (user && <Cards sessionUser={data.session.user} key={user.id} id={user.id} emails={user.email} img={user.img} name={user.username} />))}
             </ScrollView>
         </ParallaxScrollView>
     );

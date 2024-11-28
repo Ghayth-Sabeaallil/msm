@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput, GestureResponderEvent } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
 
 
 export type CardsProps = {
+    sessionUser?: string
+    id: string,
     img: string;
     name: string;
     emails: string,
 };
 
 export function Cards({
+    sessionUser,
+    id,
     img,
     name,
     emails
@@ -19,6 +23,7 @@ export function Cards({
     const [username, setUsername] = useState<string>(name);
     const [random, setRandom] = useState<number>(lastNumber);
     const [email, setEmail] = useState<string>(emails);
+
     const renderLeftActions = () => (
         <View style={[styles.action, { backgroundColor: 'green' }]}>
             <Text style={styles.actionText}>Edit</Text>
@@ -76,6 +81,19 @@ export function Cards({
 
         setModalVisible(!modalVisible);
     }
+
+    const session = async () => {
+        fetch('http://192.168.0.127:3000/session', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user: name,
+            }),
+        })
+    }
+
     return (
         <>
             <GestureHandlerRootView>
@@ -85,7 +103,12 @@ export function Cards({
                     onSwipeableLeftOpen={handleSwipeEdit}
                     onSwipeableRightOpen={handleSwipeDelete}
                 >
-                    <View style={styles.container}>
+                    <Pressable
+                        style={[
+                            styles.container,
+                            { backgroundColor: sessionUser === name ? "#5ab873" : "#aaacad" },
+                        ]}
+                        onPress={() => session()} id={id}>
                         <Image
                             style={styles.img}
                             source={{
@@ -96,7 +119,7 @@ export function Cards({
                             <Text style={styles.name}>{name}</Text>
                             <Text style={styles.email}>{emails}</Text>
                         </View>
-                    </View>
+                    </Pressable>
                 </Swipeable>
             </GestureHandlerRootView >
             <Modal
@@ -166,7 +189,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 10,
         borderRadius: 15,
-        backgroundColor: "#aaacad",
         padding: 5,
         margin: 5,
     },
