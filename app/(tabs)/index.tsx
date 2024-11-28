@@ -17,7 +17,7 @@ export default function HomeScreen() {
         <ThemedText type="title">All Posts</ThemedText>
       </ThemedView>
       <ScrollView style={styles.scroll}>
-        {data.posts.map((post) => (post && <PostView key={post.id} id={post.id} title={post.title} des={post.description} date={post.date} time={post.time} creator={post.creator} img={getImg(post.creator)} />))}
+        {data.posts.map((post) => (post && <PostView key={post.id} id={post.id} title={post.title} des={post.description} date={post.date} time={post.time} creator={post.creator} img={getImg(post.creator)} session={data.session.user} />))}
       </ScrollView>
     </ParallaxScrollView>
   );

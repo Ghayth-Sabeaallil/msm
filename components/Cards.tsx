@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput, GestureResponderEvent } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
+import { IconSymbol } from './ui/IconSymbol';
 
 
 export type CardsProps = {
@@ -25,15 +26,15 @@ export function Cards({
     const [email, setEmail] = useState<string>(emails);
 
     const renderLeftActions = () => (
-        <View style={[styles.action, { backgroundColor: 'green' }]}>
-            <Text style={styles.actionText}>Edit</Text>
+        <View style={[styles.action, { backgroundColor: 'white' }]}>
+            <IconSymbol size={28} name="medal" />
         </View>
     );
 
     // Right action renderer
     const renderRightActions = () => (
-        <View style={[styles.action, { backgroundColor: 'red' }]}>
-            <Text style={styles.actionText}>Delete</Text>
+        <View style={[styles.action, { backgroundColor: 'white' }]}>
+            <IconSymbol size={28} name="delete.left" />
         </View>
     );
 

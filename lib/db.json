@@ -1,37 +1,37 @@
 {
   "users": [
     {
-      "id": "2b2a",
-      "username": "Ghayth",
-      "email": "ghaessesa58@gmail.com",
-      "img": "https://avatar.iran.liara.run/public/32"
+      "id": "ea45",
+      "username": "Fatima",
+      "email": "Hakim",
+      "img": "https://avatar.iran.liara.run/public/85"
     },
     {
-      "id": "4e9c",
-      "username": "Fatima",
-      "email": "fatima@outlook.com",
-      "img": "https://avatar.iran.liara.run/public/96"
+      "id": "327e",
+      "username": "Ghayth",
+      "email": "Sabeaallil",
+      "img": "https://avatar.iran.liara.run/public/45"
     }
   ],
   "posts": [
     {
-      "id": "514c",
-      "title": "WW2",
-      "description": "The world war 2 was in 1945",
-      "creator": "Ghayth",
-      "date": "2024-11-28",
-      "time": "22:20"
-    },
-    {
-      "id": "64e6",
-      "title": "Sweden 1998",
-      "description": "Sweden Stockholm",
+      "id": "6ff7",
+      "title": "Post 1",
+      "description": "اول بوست الي ",
       "creator": "Fatima",
       "date": "2024-11-28",
-      "time": "22:20"
+      "time": "22:27"
+    },
+    {
+      "id": "6bfc",
+      "title": "عنوان البوست",
+      "description": "غيث سبع الليل",
+      "creator": "Ghayth",
+      "date": "2024-11-28",
+      "time": "22:27"
     }
   ],
   "session": {
-    "user": "Fatima"
+    "user": "Ghayth"
   }
 }

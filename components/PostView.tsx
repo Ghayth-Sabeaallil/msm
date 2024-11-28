@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput, GestureResponderEvent } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
 import data from '../lib/db.json';
+import { IconSymbol } from './ui/IconSymbol';
 
 
 export type PostProps = {
@@ -11,7 +12,8 @@ export type PostProps = {
     date: string,
     time: string,
     creator: string,
-    img: string | undefined
+    img: string | undefined,
+    session: string
 };
 
 export function PostView({
@@ -21,7 +23,8 @@ export function PostView({
     date,
     time,
     creator,
-    img
+    img,
+    session
 }: PostProps) {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [titleState, setTitleState] = useState<string>(title);
@@ -30,15 +33,15 @@ export function PostView({
 
 
     const renderLeftActions = () => (
-        <View style={[styles.action, { backgroundColor: 'green' }]}>
-            <Text style={styles.actionText}>Edit</Text>
+        <View style={[styles.action, { backgroundColor: 'white' }]}>
+            {creator === session ? <IconSymbol size={28} name="medal" /> : <IconSymbol size={28} name="cone.fill" />}
         </View>
     );
 
     // Right action renderer
     const renderRightActions = () => (
-        <View style={[styles.action, { backgroundColor: 'red' }]}>
-            <Text style={styles.actionText}>Delete</Text>
+        <View style={[styles.action, { backgroundColor: 'white' }]}>
+            {creator === session ? <IconSymbol size={28} name="delete.left" /> : <IconSymbol size={28} name="text.redaction" />}
         </View>
     );
 
@@ -119,7 +122,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: 10
+        gap: 10,
+        backgroundColor: "#fafafa"
     },
     infoCol: {
         display: "flex",

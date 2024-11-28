@@ -14,6 +14,11 @@ const MAPPING = {
   'switch.2': 'switch-account',
   'comb.fill': 'add-comment',
   'person.2': 'person-add-alt',
+  'delete.left': 'delete',
+  'medal': 'edit',
+  'cone.fill': 'comment',
+  'text.redaction': 'add-reaction'
+
 
 
 } as Partial<
@@ -38,7 +43,7 @@ export function IconSymbol({
 }: {
   name: IconSymbolName;
   size?: number;
-  color: string | OpaqueColorValue;
+  color?: string | OpaqueColorValue;
   style?: StyleProp<ViewStyle>;
   weight?: SymbolWeight;
 }) {
