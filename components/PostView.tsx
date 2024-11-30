@@ -33,14 +33,14 @@ export function PostView({
 
 
     const renderLeftActions = () => (
-        <View style={[styles.action, { backgroundColor: 'white' }]}>
+        <View style={[styles.action, { backgroundColor: '#70d74c' }]}>
             {creator === session ? <IconSymbol size={28} name="medal" /> : <IconSymbol size={28} name="cone.fill" />}
         </View>
     );
 
     // Right action renderer
     const renderRightActions = () => (
-        <View style={[styles.action, { backgroundColor: 'white' }]}>
+        <View style={[styles.action, { backgroundColor: '#f56767' }]}>
             {creator === session ? <IconSymbol size={28} name="delete.left" /> : <IconSymbol size={28} name="text.redaction" />}
         </View>
     );
@@ -49,15 +49,48 @@ export function PostView({
     const handleSwipeEdit = () => {
         setModalVisible(true);
     };
-    const handleNameChange = (input: string) => {
+    const handleTitleChange = (input: string) => {
         setTitleState(input);
     }
-    const handleEmailChange = (input: string) => {
+    const handleDesChange = (input: string) => {
         setDesState(input);
     }
     const handleSwipeDelete = async () => {
-
+        if (session === creator) {
+            try {
+                fetch(`http://192.168.1.192:3000/posts/${id}`, { method: 'DELETE' });
+            } catch (error) {
+                console.error('Error deleting users:', error);
+            }
+        } else {
+            console.log("Like")
+        }
     };
+
+    const eventHandlerFunction = async () => {
+        if (session === creator) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const dd = String(today.getDate()).padStart(2, '0');
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            fetch(`http://192.168.1.192:3000/posts/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: titleState,
+                    description: desState,
+                    date: `${yyyy}-${mm}-${dd}`,
+                    time: `${hours}:${minutes}`,
+                }),
+            })
+            setModalVisible(!modalVisible);
+        }
+    }
 
 
     return (
@@ -95,7 +128,53 @@ export function PostView({
                     </Pressable>
                 </Swipeable>
             </GestureHandlerRootView >
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+                }}>
+                <ScrollView>
+                    <View style={styles.modalView}>
+                        <Text style={styles.btnTxt}>Create a Post</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={titleState}
+                            onChangeText={handleTitleChange} // handle text changes
+                            placeholder="Title"
+                            placeholderTextColor="#000"
+                        />
+                        <TextInput
+                            multiline={true}
+                            numberOfLines={4}
+                            style={styles.des}
+                            value={desState}
+                            onChangeText={handleDesChange} // handle text changes
+                            placeholder="Description"
+                            placeholderTextColor="#000"
+                        />
 
+                        <View style={styles.row}>
+                            <Pressable
+                                style={[styles.button]}
+                                onPress={() => {
+                                    eventHandlerFunction();
+                                }}>
+                                <Text style={styles.btnTxt}>Edit</Text>
+                            </Pressable>
+                            <Pressable
+                                style={[styles.button]}
+                                onPress={() => {
+                                    setModalVisible(!modalVisible);
+                                }}>
+                                <Text style={styles.btnTxt}>Exit</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </ScrollView>
+            </Modal>
         </>
     );
 }
@@ -114,6 +193,21 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         gap: 10
+    },
+    des: {
+        height: "30%",
+        width: "70%",
+        borderColor: 'black',
+        borderWidth: 1,
+        borderBottomEndRadius: 5,
+        borderBottomStartRadius: 5,
+        borderTopEndRadius: 5,
+        borderTopStartRadius: 5,
+        paddingLeft: 8,
+        color: 'black',
+        gap: 5,
+        textAlign: 'left', // Aligns text to the left
+        textAlignVertical: 'top',
     },
     infoView: {
         borderWidth: 2,
