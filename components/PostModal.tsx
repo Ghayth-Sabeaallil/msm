@@ -34,6 +34,8 @@ export function PostModal() {
                 creator: data.session.user,
                 date: `${yyyy}-${mm}-${dd}`,
                 time: `${hours}:${minutes}`,
+                likes: [],
+                comments: []
             }),
         })
         setTitle("");

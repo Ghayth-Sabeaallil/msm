@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, TextInput, GestureResponderEvent } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
-import data from '../lib/db.json';
 import { IconSymbol } from './ui/IconSymbol';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 
 export type PostProps = {
@@ -13,7 +13,9 @@ export type PostProps = {
     time: string,
     creator: string,
     img: string | undefined,
-    session: string
+    session: string,
+    likes: string[],
+    comments: string[]
 };
 
 export function PostView({
@@ -24,7 +26,9 @@ export function PostView({
     time,
     creator,
     img,
-    session
+    session,
+    likes,
+    comments
 }: PostProps) {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [titleState, setTitleState] = useState<string>(title);
@@ -46,8 +50,14 @@ export function PostView({
     );
 
     // Handle swipe actions
-    const handleSwipeEdit = () => {
-        setModalVisible(true);
+    const handleSwipeLeft = () => {
+        if (session === creator) {
+            setModalVisible(true);
+        }
+        else {
+            console.log("comment")
+        }
+
     };
     const handleTitleChange = (input: string) => {
         setTitleState(input);
@@ -55,7 +65,7 @@ export function PostView({
     const handleDesChange = (input: string) => {
         setDesState(input);
     }
-    const handleSwipeDelete = async () => {
+    const handleSwipeRight = async () => {
         if (session === creator) {
             try {
                 fetch(`http://192.168.1.192:3000/posts/${id}`, { method: 'DELETE' });
@@ -63,7 +73,18 @@ export function PostView({
                 console.error('Error deleting users:', error);
             }
         } else {
-            console.log("Like")
+            const response = await fetch(`http://192.168.1.192:3000/posts/${id}`);
+            const user = await response.json();
+            if (!user.likes.includes(session)) {
+                const updateLikes = [...user.likes, session];
+                fetch(`http://192.168.1.192:3000/posts/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ likes: updateLikes })
+                });
+            }
         }
     };
 
@@ -99,8 +120,8 @@ export function PostView({
                 <Swipeable
                     renderLeftActions={renderLeftActions}
                     renderRightActions={renderRightActions}
-                    onSwipeableLeftOpen={handleSwipeEdit}
-                    onSwipeableRightOpen={handleSwipeDelete}
+                    onSwipeableLeftOpen={handleSwipeLeft}
+                    onSwipeableRightOpen={handleSwipeRight}
                 >
                     <Pressable
                         style={[
@@ -118,6 +139,11 @@ export function PostView({
                             <View>
                                 <Text style={styles.viewUser}>{creator}</Text>
                                 <Text style={styles.viewDate}>{date} - {time}</Text>
+                            </View>
+                            <View>
+                                <Text style={[styles.like]}>{likes.length} Likes</Text>
+                                <Text style={[styles.comment]}>{comments.length} Comments</Text>
+
                             </View>
                         </View>
                         <View style={styles.infoView}>
@@ -138,7 +164,7 @@ export function PostView({
                 }}>
                 <ScrollView>
                     <View style={styles.modalView}>
-                        <Text style={styles.btnTxt}>Create a Post</Text>
+                        <Text style={styles.btnTxt}>Edit the post</Text>
                         <TextInput
                             style={styles.input}
                             value={titleState}
@@ -194,6 +220,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10
     },
+
+
     des: {
         height: "30%",
         width: "70%",
@@ -218,6 +246,21 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         gap: 10,
         backgroundColor: "#fafafa"
+    },
+    like: {
+        backgroundColor: "#5f90f8",
+        color: "white",
+        padding: 3,
+        borderRadius: 5,
+        textAlign: "center",
+
+    },
+    comment: {
+        backgroundColor: "#4aced3",
+        color: "white",
+        padding: 3,
+        borderRadius: 5,
+
     },
     infoCol: {
         display: "flex",

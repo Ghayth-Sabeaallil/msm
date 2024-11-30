@@ -11,24 +11,27 @@
       "username": "Ghayth",
       "email": "Sabeaallil",
       "img": "https://avatar.iran.liara.run/public/45"
+    },
+    {
+      "id": "d7a8",
+      "username": "Kamal",
+      "email": "Se",
+      "img": "https://avatar.iran.liara.run/public/57"
     }
   ],
   "posts": [
     {
-      "id": "6ff7",
-      "title": "Post 1",
-      "description": "اول بوست الي ",
+      "id": "7eb8",
+      "title": "Post 1x",
+      "description": "Des 1x",
       "creator": "Fatima",
-      "date": "2024-11-28",
-      "time": "22:27"
-    },
-    {
-      "id": "e3b3",
-      "title": "T3",
-      "description": "D5",
-      "creator": "Ghayth",
-      "date": "2024-11-29",
-      "time": "22:48"
+      "date": "2024-11-30",
+      "time": "13:23",
+      "likes": [
+        "Ghayth",
+        "Kamal"
+      ],
+      "comments": []
     }
   ],
   "session": {

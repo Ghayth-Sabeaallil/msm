@@ -21,7 +21,7 @@ export default function TabTwoScreen() {
       </ThemedView>
       <PostModal />
       <ScrollView style={styles.scroll}>
-        {posts.map((post) => (post && <PostView key={post.id} id={post.id} title={post.title} des={post.description} date={post.date} time={post.time} creator={post.creator} img={getImg(post.creator)} session={data.session.user} />))}
+        {posts.map((post) => (post && <PostView key={post.id} id={post.id} title={post.title} des={post.description} date={post.date} time={post.time} creator={post.creator} img={getImg(post.creator)} session={data.session.user} likes={post.likes} comments={post.comments} />))}
       </ScrollView>
     </ParallaxScrollView>
   );
