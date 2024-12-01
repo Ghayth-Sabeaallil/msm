@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image, Alert, Modal, ScrollView, Pressable, Tex
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
 import { IconSymbol } from './ui/IconSymbol';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
+import data from '../lib/db.json';
 
 
 export type PostProps = {
@@ -33,6 +34,10 @@ export function PostView({
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [titleState, setTitleState] = useState<string>(title);
     const [desState, setDesState] = useState<string>(des);
+    const [commentModalVisible, setCommentModalVisible] = useState<boolean>(false);
+    const [commentModalViewVisible, setCommentModalViewVisible] = useState<boolean>(false);
+
+    const [commentState, setCommentState] = useState<string>("");
 
 
 
@@ -55,12 +60,15 @@ export function PostView({
             setModalVisible(true);
         }
         else {
-            console.log("comment")
+            setCommentModalVisible(true);
         }
 
     };
     const handleTitleChange = (input: string) => {
         setTitleState(input);
+    }
+    const handleCommentChange = (input: string) => {
+        setCommentState(input);
     }
     const handleDesChange = (input: string) => {
         setDesState(input);
@@ -111,8 +119,23 @@ export function PostView({
             })
             setModalVisible(!modalVisible);
         }
+        else {
+            const response = await fetch(`http://192.168.1.192:3000/posts/${id}`);
+            const user = await response.json();
+            const updateComment = [...user.comments, { comment: commentState, creator: session }];
+            fetch(`http://192.168.1.192:3000/posts/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ comments: updateComment })
+            });
+            setCommentState("");
+            setCommentModalVisible(!commentModalVisible);
+        }
     }
 
+    const post = data.posts.find(post => post.id === id);
 
     return (
         <>
@@ -124,11 +147,11 @@ export function PostView({
                     onSwipeableRightOpen={handleSwipeRight}
                 >
                     <Pressable
-                        style={[
-                            styles.container,
-                            { backgroundColor: "#aaacad" },
-                        ]}
-                        id={id}>
+                        style={styles.container}
+                        id={id}
+                        onPress={() => {
+                            setCommentModalViewVisible(!modalVisible);
+                        }}>
                         <View style={styles.info}>
                             <Image
                                 style={styles.imgs}
@@ -201,6 +224,75 @@ export function PostView({
                     </View>
                 </ScrollView>
             </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={commentModalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!commentModalVisible);
+                }}>
+                <ScrollView>
+                    <View style={styles.modalView}>
+                        <Text style={styles.btnTxt}>Comment</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={commentState}
+                            onChangeText={handleCommentChange} // handle text changes
+                            placeholder="Comment"
+                            placeholderTextColor="#000"
+                        />
+
+                        <View style={styles.row}>
+                            <Pressable
+                                style={[styles.button]}
+                                onPress={() => {
+                                    eventHandlerFunction();
+                                }}>
+                                <Text style={styles.btnTxt}>Post</Text>
+                            </Pressable>
+                            <Pressable
+                                style={[styles.button]}
+                                onPress={() => {
+                                    setCommentModalVisible(!commentModalVisible);
+                                }}>
+                                <Text style={styles.btnTxt}>Exit</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </ScrollView>
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={commentModalViewVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!commentModalVisible);
+                }}>
+                <ScrollView>
+                    <View style={styles.modalViewComment}>
+                        <Text style={styles.btnTxt}>Comments</Text>
+                        {post?.comments.map(com => (
+                            <Pressable style={styles.container} id={id}>
+                                <View style={styles.info}>
+                                    <Text style={styles.viewUser}>{com.creator}</Text>
+                                    <Text style={styles.viewDate}>{com.comment}</Text>
+                                </View>
+                            </Pressable>
+                        ))}
+                        <View style={styles.row}>
+                            <Pressable
+                                style={[styles.button]}
+                                onPress={() => {
+                                    setCommentModalViewVisible(!commentModalViewVisible);
+                                }}>
+                                <Text style={styles.btnTxt}>Exit</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </ScrollView>
+            </Modal>
         </>
     );
 }
@@ -208,6 +300,7 @@ export function PostView({
 const styles = StyleSheet.create({
     container: {
         display: "flex",
+        backgroundColor: "#aaacad",
         flexDirection: "column",
         borderRadius: 15,
         padding: 10,
@@ -351,6 +444,25 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
+    modalViewComment: {
+        backgroundColor: '#efe9e9',
+        display: "flex",
+        flexDirection: "column",
+        margin: 20,
+        padding: 15,
+        marginTop: "25%",
+        gap: 10,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+
     input: {
         height: 45,
         width: "70%",

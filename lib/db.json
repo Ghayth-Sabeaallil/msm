@@ -21,20 +21,33 @@
   ],
   "posts": [
     {
-      "id": "7eb8",
-      "title": "Post 1x",
-      "description": "Des 1x",
-      "creator": "Fatima",
-      "date": "2024-11-30",
-      "time": "13:23",
+      "id": "1e06",
+      "title": "Post 1",
+      "description": "Fatima Hakim",
+      "creator": "Ghayth",
+      "date": "2024-12-01",
+      "time": "20:09",
       "likes": [
-        "Ghayth",
+        "Fatima",
         "Kamal"
       ],
-      "comments": []
+      "comments": [
+        {
+          "comment": "Well done ",
+          "creator": "Fatima"
+        },
+        {
+          "comment": "Kkk",
+          "creator": "Fatima"
+        },
+        {
+          "comment": "Jfjf",
+          "creator": "Kamal"
+        }
+      ]
     }
   ],
   "session": {
-    "user": "Fatima"
+    "user": "Kamal"
   }
 }
