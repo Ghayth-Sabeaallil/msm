@@ -1,53 +1,44 @@
 {
   "users": [
     {
-      "id": "ea45",
-      "username": "Fatima",
-      "email": "Hakim",
-      "img": "https://avatar.iran.liara.run/public/85"
-    },
-    {
-      "id": "327e",
+      "id": "67cd",
       "username": "Ghayth",
-      "email": "Sabeaallil",
-      "img": "https://avatar.iran.liara.run/public/45"
+      "email": "test",
+      "img": "https://avatar.iran.liara.run/public/49"
     },
     {
-      "id": "d7a8",
-      "username": "Kamal",
-      "email": "Se",
-      "img": "https://avatar.iran.liara.run/public/57"
+      "id": "399f",
+      "username": "test",
+      "email": "ghhh",
+      "img": "https://avatar.iran.liara.run/public/96"
+    },
+    {
+      "id": "2e27",
+      "username": "Tarek",
+      "email": "tarek",
+      "img": "https://fkdslfnf.iran.liara.run/public/49"
     }
   ],
   "posts": [
     {
-      "id": "1e06",
-      "title": "Post 1",
-      "description": "Fatima Hakim",
+      "id": "c356",
+      "title": "test 1",
+      "description": "test 1",
       "creator": "Ghayth",
-      "date": "2024-12-01",
-      "time": "20:09",
+      "date": "2024-12-12",
+      "time": "14:18",
       "likes": [
-        "Fatima",
-        "Kamal"
+        "test"
       ],
       "comments": [
         {
-          "comment": "Well done ",
-          "creator": "Fatima"
-        },
-        {
-          "comment": "Kkk",
-          "creator": "Fatima"
-        },
-        {
-          "comment": "Jfjf",
-          "creator": "Kamal"
+          "comment": "comment ",
+          "creator": "test"
         }
       ]
     }
   ],
   "session": {
-    "user": "Kamal"
+    "user": "Ghayth"
   }
 }
